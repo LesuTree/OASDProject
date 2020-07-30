@@ -1,0 +1,122 @@
+package com.lesu.service;
+
+import com.lesu.bean.Comment;
+import com.lesu.bean.Image;
+import com.lesu.bean.User;
+import com.lesu.dao.commentDao.CommentDao;
+import com.lesu.dao.commentDao.CommentDaoImpl;
+import com.lesu.dao.imageDao.ImageDao;
+import com.lesu.dao.imageDao.ImageDaoImpl;
+import com.lesu.others.ActionResult;
+import com.lesu.others.SearchResult;
+
+import javax.servlet.http.HttpServletRequest;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * The service layer for comment
+ */
+public class CommentService {
+
+    private Connection connection;
+
+    public CommentService(Connection connection) {
+        this.connection = connection;
+    }
+
+    /**
+     * To add a comment
+     * @param newComment new comment object
+     * @return
+     */
+    public ActionResult addComment(Comment newComment) {
+        try {
+            CommentDao commentDao = new CommentDaoImpl(connection);
+            ImageDao imageDao = new ImageDaoImpl(connection);
+
+            Image image = imageDao.getImage(newComment.getImageID());
+
+            if (image == null) return new ActionResult(false, "图片不存在！");
+
+            boolean success = commentDao.addComment(newComment);
+
+            if (success) {
+                return new ActionResult(true, "评论成功");
+            } else {
+                return new ActionResult(false, "评论失败");
+            }
+
+        } catch (Exception e) {
+            return new ActionResult(false, "评论失败");
+        }
+
+    }
+
+    /**
+     * To get comments in one page
+     * @param imageID imageID
+     * @param user The user
+     * @param requestedPage requestedPage
+     * @param pageSize pageSize: how many elements are there on one page?
+     * @param howToOrder Two options. "time" and "popularity"
+     * @param request The HttpServletRequest
+     * @return SearchResult Object
+     */
+    public SearchResult getComments(int imageID, User user, int requestedPage, int pageSize, String howToOrder,HttpServletRequest request) {
+        try {
+            CommentDao commentDao = new CommentDaoImpl(connection);
+            List<Comment> commentList = commentDao.getComments(imageID, howToOrder);
+
+            SearchResult searchResult = getSearchResult(commentList, requestedPage, pageSize, user,request);
+
+            return searchResult;
+
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
+
+    private SearchResult getSearchResult(List<Comment> originalCommentList, int requestedPage, int pageSize, User user, HttpServletRequest request) {
+        ArrayList<Comment> subCommentList = new ArrayList<>();
+        SearchResult searchResult = new SearchResult();
+
+
+        int maxPage = (int) Math.ceil((double) originalCommentList.size() / pageSize);//得到最大页码数
+        searchResult.setMaxPage(maxPage);
+
+        requestedPage = Math.max(requestedPage, 1);
+        requestedPage = Math.min(maxPage, requestedPage);
+
+        searchResult.setRespondedPage(requestedPage);//净化用户输入的页码数，得到最终相应的页面
+
+
+        int start = pageSize * (requestedPage - 1);
+        int end = Math.min(start + pageSize, originalCommentList.size());//根据最终相应的页面，得到应该从原始的list中截取哪一段
+
+        for (int i = start; i < end; i++) {
+            subCommentList.add(originalCommentList.get(i));
+        }
+
+        UserService userService = new UserService(connection, request);
+
+
+        //遍历评论的子列表 判断用户是否赞了这个评论
+        for (int i = 0; i <= subCommentList.size() - 1; i++) {
+            if (userService.hasFavoredTheComment(user.getUid(), subCommentList.get(i).getCommentID())) {
+                subCommentList.get(i).setHaveFavoredByMe(true);
+            } else {
+                subCommentList.get(i).setHaveFavoredByMe(false);
+            }
+        }
+
+        searchResult.setCommentList(subCommentList);
+
+        return searchResult;
+
+    }
+
+
+}

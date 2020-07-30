@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+
+    <response-character-encoding>UTF-8</response-character-encoding>
+    <request-character-encoding>UTF-8</request-character-encoding>
+
+
+
+    <servlet>
+        <servlet-name>registerjsp</servlet-name>
+        <jsp-file>/register.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>registerjsp</servlet-name>
+        <url-pattern>/registerjsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>loginjsp</servlet-name>
+        <jsp-file>/login.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>loginjsp</servlet-name>
+        <url-pattern>/loginjsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>indexjsp</servlet-name>
+        <jsp-file>/realindex.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>indexjsp</servlet-name>
+        <url-pattern>/indexjsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>searchjsp</servlet-name>
+        <jsp-file>/search.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>searchjsp</servlet-name>
+        <url-pattern>/searchjsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>myphotojsp</servlet-name>
+        <jsp-file>/myphoto.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>myphotojsp</servlet-name>
+        <url-pattern>/myphotojsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>myfavorjsp</servlet-name>
+        <jsp-file>/myfavor.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>myfavorjsp</servlet-name>
+        <url-pattern>/myfavorjsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>detailsjsp</servlet-name>
+        <jsp-file>/details.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>detailsjsp</servlet-name>
+        <url-pattern>/detailsjsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>uploadjsp</servlet-name>
+        <jsp-file>/upload.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>uploadjsp</servlet-name>
+        <url-pattern>/uploadjsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>modifyjsp</servlet-name>
+        <jsp-file>/modify.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>modifyjsp</servlet-name>
+        <url-pattern>/modifyjsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>addfriendjsp</servlet-name>
+        <jsp-file>/addfriend.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addfriendjsp</servlet-name>
+        <url-pattern>/addfriendjsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>myfriendjsp</servlet-name>
+        <jsp-file>/myfriend.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>myfriendjsp</servlet-name>
+        <url-pattern>/myfriendjsp</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>othersfavor</servlet-name>
+        <jsp-file>/othersfavor.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>othersfavor</servlet-name>
+        <url-pattern>/othersfavorjsp</url-pattern>
+    </servlet-mapping>
+
+
+
+</web-app>
